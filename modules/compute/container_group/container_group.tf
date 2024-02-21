@@ -35,10 +35,10 @@ resource "azurerm_container_group" "acg" {
   restart_policy      = try(var.settings.restart_policy, "Always")
   subnet_ids = coalesce(
   try(ip_configuration.value.subnet_id, null),
-  try(var.remote_objects.networking[subnet_id.value.lz_key][subnet_id.value.vnet_key].subnets[subnet_id.value.subnet_key].id, null),
-  try(var.remote_objects.networking[var.client_config.landingzone_key][subnet_id.value.vnet_key].subnets[subnet_id.value.subnet_key].id, null),
-  try(var.remote_objects.virtual_networks[subnet_id.value.lz_key][subnet_id.value.virtual_subnet_key].id, null),
-  try(var.remote_objects.virtual_networks[var.client_config.landingzone_key][subnet_id.value.virtual_subnet_key].id, null)
+  try(var.remote_objects.networking[subnet_ids.value.lz_key][subnet_ids.value.vnet_key].subnets[subnet_ids.value.subnet_key].id, null),
+  try(var.remote_objects.networking[var.client_config.landingzone_key][subnet_ids.value.vnet_key].subnets[subnet_ids.value.subnet_key].id, null),
+  try(var.remote_objects.virtual_networks[subnet_ids.value.lz_key][subnet_ids.value.virtual_subnet_key].id, null),
+  try(var.remote_objects.virtual_networks[var.client_config.landingzone_key][subnet_ids.value.virtual_subnet_key].id, null)
 )
 
   dynamic "exposed_port" {
