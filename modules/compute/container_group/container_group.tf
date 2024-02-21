@@ -33,10 +33,7 @@ resource "azurerm_container_group" "acg" {
   tags                = merge(local.tags, try(var.settings.tags, null))
   ip_address_type     = try(var.settings.ip_address_type, "Public")
   restart_policy      = try(var.settings.restart_policy, "Always")
-  subnet_ids = coalesce(
-  try(var.settings.subnet_ids, null),
-  try(var.remote_objects.networking[var.settings.subnet_ids.lz_key][var.settings.subnet_ids.vnet_key].subnets[var.settings.subnet_ids.subnet_key].id, null),
-  try(var.remote_objects.networking[var.client_config.landingzone_key][var.settings.subnet_ids.vnet_key].subnets[var.settings.subnet_ids.subnet_key].id, null)
+  network_profile_id  = try(var.combined_resources.network_profiles[try(var.settings.network_profile.lz_key, var.client_config.landingzone_key)][var.settings.network_profile.key].id, null)
 )
 
   dynamic "exposed_port" {
