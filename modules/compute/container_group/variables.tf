@@ -10,6 +10,7 @@ variable "global_settings" {}
 variable "location" {}
 variable "resource_group_name" {}
 variable "settings" {}
+variable "remote_objects" {}
 variable "dynamic_keyvault_secrets" {
   description = "Provide credenrials for private image registries"
   default     = {}
